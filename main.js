@@ -27,6 +27,10 @@ var ball = {
     dx:3,
     dy:3
 }
+function preload(){
+  sound1= loadSound("ball_touch_paddel.wav");
+  sound2= loadSound("missed.wav");
+}
 function startGame(){
   status="start";
   document.getElementById("status").innerHTML="Game Is Loaded";
@@ -57,7 +61,11 @@ function gotPoses(results)
 function modelLoaded() {
   console.log('PoseNet Is Initialized');
 }
-
+function restart(){
+  pcscore=0;
+  playerscore=0;
+  loop();
+}
 function draw(){
   if(status=="start"){
     image(video, 0, 0, 700, 500); 
@@ -90,7 +98,7 @@ function draw(){
      fill(250,0,0);
       stroke(0,0,250);
       strokeWeight(0.5);
-     paddle1Y = mouseY; 
+     paddle1Y = rightWristY; 
      rect(paddle1X,paddle1Y,paddle1,paddle1Height,100);
      
      
@@ -110,6 +118,7 @@ function draw(){
      
      //function move call which in very important
       move();
+
   }
   
 }
@@ -164,8 +173,10 @@ function move(){
   if (ball.x-2.5*ball.r/2< 0){
   if (ball.y >= paddle1Y&& ball.y <= paddle1Y + paddle1Height) {
     ball.dx = -ball.dx+0.5; 
+    sound1.play();
   }
   else{
+    sound2.play();
     pcscore++;
     reset();
     navigator.vibrate(100);
@@ -179,7 +190,7 @@ if(pcscore ==4){
     stroke("white");
     textSize(25)
     text("Game Over!☹☹",width/2,height/2);
-    text("Reload The Page!",width/2,height/2+30)
+    text("Press restart button to play again!",width/2,height/2+30)
     noLoop();
     pcscore = 0;
 }
