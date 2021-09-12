@@ -1,7 +1,7 @@
 
 /*created by prashant shukla */
 scoreRightWrist = 0;
-
+status="";
 
 rightWristX = 0;
 rightWristY = 0;
@@ -26,6 +26,10 @@ var ball = {
     r:20,
     dx:3,
     dy:3
+}
+function startGame(){
+  status="start";
+  document.getElementById("status").innerHTML="Game Is Loaded";
 }
 
 function setup(){
@@ -55,56 +59,59 @@ function modelLoaded() {
 }
 
 function draw(){
-  image(video, 0, 0, 700, 500); 
-  if(scoreRightWrist > 0.2){
-
-    fill("red");
- stroke("red");
-    circle(rightWristX,rightWristY,20); 
+  if(status=="start"){
+    image(video, 0, 0, 700, 500); 
+    if(scoreRightWrist > 0.2){
+  
+      fill("red");
+   stroke("red");
+      circle(rightWristX,rightWristY,20); 
+       
+      
+      // if(status2=="false"){
+      //     song2.play();
+      //     document.getElementById("song").innerHTML="Marshmello";
+      // }
+    }
+  //  background(0); 
+  
+   fill("black");
+   stroke("black");
+   rect(680,0,20,700);
+  
+   fill("black");
+   stroke("black");
+   rect(0,0,20,700);
+   
+     //funtion paddleInCanvas call 
+     paddleInCanvas();
+   
+     //left paddle
+     fill(250,0,0);
+      stroke(0,0,250);
+      strokeWeight(0.5);
+     paddle1Y = mouseY; 
+     rect(paddle1X,paddle1Y,paddle1,paddle1Height,100);
      
-    
-    // if(status2=="false"){
-    //     song2.play();
-    //     document.getElementById("song").innerHTML="Marshmello";
-    // }
+     
+      //pc computer paddle
+      fill("#FFA500");
+      stroke("#FFA500");
+     var paddle2y =ball.y-paddle2Height/2;  rect(paddle2Y,paddle2y,paddle2,paddle2Height,100);
+      
+      //function midline call
+      midline();
+      
+      //funtion drawScore call 
+     drawScore();
+     
+     //function models call  
+     models();
+     
+     //function move call which in very important
+      move();
   }
-//  background(0); 
-
- fill("black");
- stroke("black");
- rect(680,0,20,700);
-
- fill("black");
- stroke("black");
- rect(0,0,20,700);
- 
-   //funtion paddleInCanvas call 
-   paddleInCanvas();
- 
-   //left paddle
-   fill(250,0,0);
-    stroke(0,0,250);
-    strokeWeight(0.5);
-   paddle1Y = mouseY; 
-   rect(paddle1X,paddle1Y,paddle1,paddle1Height,100);
-   
-   
-    //pc computer paddle
-    fill("#FFA500");
-    stroke("#FFA500");
-   var paddle2y =ball.y-paddle2Height/2;  rect(paddle2Y,paddle2y,paddle2,paddle2Height,100);
-    
-    //function midline call
-    midline();
-    
-    //funtion drawScore call 
-   drawScore();
-   
-   //function models call  
-   models();
-   
-   //function move call which in very important
-    move();
+  
 }
 
 
