@@ -1,5 +1,12 @@
 
 /*created by prashant shukla */
+scoreRightWrist = 0;
+
+
+rightWristX = 0;
+rightWristY = 0;
+
+
 
 var paddle2 =10,paddle1=10;
 
@@ -29,14 +36,38 @@ function setup(){
 	video.parent('output');
   video.hide();
   poseNet = ml5.poseNet(video, modelLoaded);
-	// poseNet.on('pose', gotPoses);
+	poseNet.on('pose', gotPoses);
 }
+function gotPoses(results)
+  {
+	if(results.length > 0)
+	{
+	  console.log(results);
+      scoreRightWrist =  results[0].pose.keypoints[10].score;
+      rightWristX = results[0].pose.rightWrist.x;
+      rightWristY = results[0].pose.rightWrist.y;
+      console.log("rightWristX = " + rightWristX +" rightWristY = "+ rightWristY);
+	}
+  }
+   
 function modelLoaded() {
   console.log('PoseNet Is Initialized');
 }
 
 function draw(){
   image(video, 0, 0, 700, 500); 
+  if(scoreRightWrist > 0.2){
+
+    fill("red");
+ stroke("red");
+    circle(rightWristX,rightWristY,20); 
+     
+    
+    // if(status2=="false"){
+    //     song2.play();
+    //     document.getElementById("song").innerHTML="Marshmello";
+    // }
+  }
 //  background(0); 
 
  fill("black");
